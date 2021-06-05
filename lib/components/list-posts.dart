@@ -56,8 +56,8 @@ class _HomeActivity extends State<Home> {
                         padding: EdgeInsets.all(15),
                       )
                     ]..addAll(posts
-                        .map((e) => Post(e["name"], e["thumbnail"], e["desc"],
-                            e["link"], e["time_diff"]))
+                        .map((e) => Post(e["name"], e["thumbnail"], e["link"],
+                            e["time_diff"]))
                         .toList()),
                   )
                 ]),
@@ -68,10 +68,9 @@ class _HomeActivity extends State<Home> {
 class Post extends StatelessWidget {
   final String titleT;
   final String imageL;
-  final String desc;
   final String _url;
   final String timeDifference;
-  Post(this.titleT, this.imageL, this.desc, this._url, this.timeDifference);
+  Post(this.titleT, this.imageL, this._url, this.timeDifference);
 
   void _launchURL() async => await canLaunch(_url)
       ? await launch(_url)

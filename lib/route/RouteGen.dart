@@ -5,7 +5,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     //final args = settings.arguments;
     final name = settings.name;
-    final title = "PSCMonk";
+    final title = "PSC Monk";
     switch (name) {
       case '/':
         return MaterialPageRoute(builder: (_) => Home(title: title));
