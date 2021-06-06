@@ -1,8 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:developer' as dev;
 import 'package:jiffy/jiffy.dart';
-import 'package:intl/intl.dart';
 
 class WordPress {
   final apiUrl = "https://pscmonk.com/wp-json";
@@ -33,8 +31,7 @@ class WordPress {
       String title = post["title"]["rendered"].toString();
       String link = post["link"].toString();
 
-      String thumbnailURL =
-          "https://pscmonk.com/wp-content/uploads/2021/06/cropped-resize.png";
+      String thumbnailURL = "https://i.imgur.com/zjIQCvB.png"; //Fallback
       List? featuredMedia = post["_embedded"]["wp:featuredmedia"];
       String datePublished = post["date_gmt"].toString();
       if (featuredMedia != null) {
