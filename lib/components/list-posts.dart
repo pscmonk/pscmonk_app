@@ -51,7 +51,7 @@ class _HomeActivity extends State<Home> {
           onNotification: (scrollEnd) {
             var metrics = scrollEnd.metrics;
             if (metrics.atEdge) {
-              if (metrics.pixels != 0) getPosts();
+              if (metrics.pixels >= 100) getPosts();
             }
             return true;
           },
