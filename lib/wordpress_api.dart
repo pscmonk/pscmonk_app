@@ -7,19 +7,26 @@ import 'package:intl/intl.dart';
 class WordPress {
   final apiUrl = "https://pscmonk.com/wp-json";
 
-  Future<String> getResponse(url) async {
+  Future<Map> getResponse(url) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      String responseContent = response.body;
+      Map responseContent = {
+        "body": response.body,
+        "headers": response.headers
+      };
       return responseContent;
     } else {
       return getResponse(url);
     }
   }
 
-  Future<List> getPosts() async {
-    String response = await getResponse("$apiUrl/wp/v2/posts?_embed");
-    List posts = json.decode(response);
+  Future<Map> getPosts(pageNo) async {
+    Map response = await getResponse("$apiUrl/wp/v2/posts?_embed&page=$pageNo");
+
+    List posts = json.decode(response["body"]);
+
+    int pagesCount = int.parse(response["headers"]["x-wp-totalpages"]);
+
     List newList = [];
     for (int i = 0; i < posts.length; i++) {
       Map post = posts[i];
@@ -43,8 +50,8 @@ class WordPress {
         "time_diff": getTimeDifferenceFromNow(datePublished),
       });
     }
-    //dev.log(json.encode(newList));
-    return newList;
+
+    return {"posts": newList, "pagesCount": pagesCount};
   }
 
   excerpt(String string, length) {

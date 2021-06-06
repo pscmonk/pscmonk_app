@@ -13,16 +13,26 @@ class _HomeActivity extends State<Home> {
   final title;
   _HomeActivity(this.title);
 
+  WordPress wp = WordPress();
+
   List posts = [];
   bool loading = true;
+  int pageIndex = 0;
+  int totalPages = 1;
 
   Future getPosts() async {
-    WordPress wp = WordPress();
-    List postsList = await wp.getPosts();
-    setState(() {
-      posts = postsList;
-      loading = false;
-    });
+    pageIndex++;
+    if (pageIndex <= totalPages) {
+      setState(() {
+        loading = true;
+      });
+      Map postsList = await wp.getPosts(pageIndex);
+      setState(() {
+        posts.addAll(postsList["posts"]);
+        totalPages = postsList["pagesCount"];
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -37,30 +47,38 @@ class _HomeActivity extends State<Home> {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: loading
-          ? Loading()
-          : ListView(
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          "Recent Posts",
-                          style: TextStyle(
-                              fontSize: 32, fontWeight: FontWeight.bold),
-                        ),
-                        padding: EdgeInsets.all(15),
-                      )
-                    ]..addAll(posts
-                        .map((e) => Post(e["name"], e["thumbnail"], e["link"],
-                            e["time_diff"]))
-                        .toList()),
+      body: NotificationListener<ScrollEndNotification>(
+          onNotification: (scrollEnd) {
+            var metrics = scrollEnd.metrics;
+            if (metrics.atEdge) {
+              if (metrics.pixels != 0) getPosts();
+            }
+            return true;
+          },
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.vertical,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Text(
+                      "Recent Posts",
+                      style:
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    ),
+                    padding: EdgeInsets.all(15),
                   )
-                ]),
+                ]..addAll(posts
+                    .map((e) => Post(
+                        e["name"], e["thumbnail"], e["link"], e["time_diff"]))
+                    .toList()),
+              ),
+              loading ? Loading() : Text("")
+            ],
+          )),
     );
   }
 }
