@@ -96,39 +96,43 @@ class Post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double cWidth = MediaQuery.of(context).size.width * 0.5;
+    double cWidth = MediaQuery.of(context).size.width * 0.55;
     return InkWell(
       onTap: _launchURL,
       child: Container(
         height: 130,
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
         child: Card(
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           margin: EdgeInsets.all(0),
-          elevation: 2,
+          elevation: 0,
+          color: Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.network(
-                imageL.toString(),
-                width: 100,
-                height: 100,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5.0),
+                child: Image.network(
+                  imageL.toString(),
+                  height: 120,
+                  width: 120,
+                ),
               ),
               Padding(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: Container(
                   width: cWidth,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: Text(
                           titleT,
-                          overflow: TextOverflow.clip,
-                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 3,
                           style: TextStyle(
                               fontSize: 21, fontWeight: FontWeight.w400),
                           softWrap: true,
