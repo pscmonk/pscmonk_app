@@ -60,16 +60,30 @@ class _HomeActivity extends State<Home> {
             scrollDirection: Axis.vertical,
             children: [
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(
-                      "Recent Posts",
-                      style:
-                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 120, 0, 0),
+                        child: Text(
+                          "Recent Posts",
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
                     ),
-                    padding: EdgeInsets.all(15),
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 20),
+                    margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/images/header.jpg"),
+                            fit: BoxFit.cover)),
                   )
                 ]..addAll(posts
                     .map((e) => Post(
