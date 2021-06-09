@@ -69,7 +69,7 @@ class _HomeActivity extends State<Home> {
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 120, 0, 0),
                         child: Text(
-                          "Recent Posts",
+                          "Updates",
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
