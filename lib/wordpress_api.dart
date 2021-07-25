@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:jiffy/jiffy.dart';
 
 class WordPress {
-  final apiUrl = "https://pscmonk.com/wp-json";
+  final apiUrl = "https://blog.pscmonk.com/wp-json";
 
   Future<Map> getResponse(url) async {
     final response = await http.get(Uri.parse(url));
